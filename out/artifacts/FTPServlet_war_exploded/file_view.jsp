@@ -151,7 +151,7 @@
                         tableData +=
                             '<td style="text-align: center;cursor: pointer"><i class="fa fa-arrow-circle-down" style="color: #94948c;text-align: center;font-size: 25px;padding: 5px"></i></td>' +
                             '<td class="btnRename" style="text-align: center;cursor: pointer"><i class="fa fa-pencil" style="color: #62625c;text-align: center;font-size: 25px;padding: 5px"></i></td>' +
-                            '<td style="text-align: center;cursor: pointer"><i class="fa fa-times" style="color: #dd1f08;text-align: center;font-size: 25px;padding: 5px"></i></td>' +
+                            '<td class="btnDelete" style="text-align: center;cursor: pointer"><i class="fa fa-times" style="color: #dd1f08;text-align: center;font-size: 25px;padding: 5px"></i></td>' +
                             '</tr>';
                     }
                     $('#fileBody').html(tableData);
@@ -231,6 +231,31 @@
                 }
             }
         );
+    })
+
+    $(document).on('click', '.btnDelete', function () {
+        var r = confirm("Do you need to delete this folder / file?");
+        if (r === true) {
+            $.ajax(
+                {
+                    type: "post",
+                    url: window.location.origin + "/ftp_delete",
+                    data: {
+                        folderPath: folderPath + '/' + $(this).parent().children('td').eq(0).children('span').text()
+                    },
+                    success: function (response) {
+                        if (JSON.parse(response) === true) {
+                            loadFiles(folderPath);
+                        }
+                    },
+                    error: function () {
+                        // if(err.status === 500){
+                        //     renameFile()
+                        // }
+                    }
+                }
+            );
+        }
     })
 </script>
 </body>

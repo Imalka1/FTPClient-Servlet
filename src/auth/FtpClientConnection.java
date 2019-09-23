@@ -35,8 +35,9 @@ public class FtpClientConnection {
     }
 
     public FTPClient getFtpClient() {
-        System.out.println(ftpClient.getReplyString());
-        if (ftpClient.getReplyCode() == 421) {
+        try {
+            ftpClient.sendNoOp();
+        } catch (IOException e) {
             ftpClientConnection = new FtpClientConnection();
         }
         return ftpClient;
