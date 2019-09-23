@@ -55,9 +55,8 @@ public class FtpClientController extends HttpServlet {
                     if (ftpFile.getType() == FTPFile.DIRECTORY_TYPE) {
                         fileJson.put("FileType", "Directory");
                         fileJson.put("FileName", ftpFile.getName());
+                        filesJson.add(fileJson);
                     }
-
-                    filesJson.add(fileJson);
                 }
 
                 for (FTPFile ftpFile : ftpFiles) {
@@ -70,10 +69,9 @@ public class FtpClientController extends HttpServlet {
                         if(ftpFile.getName().endsWith(req.getParameter("fileType").trim())){
                             fileJson.put("FileType", "File");
                             fileJson.put("FileName", ftpFile.getName());
+                            filesJson.add(fileJson);
                         }
                     }
-
-                    filesJson.add(fileJson);
                 }
                 obj.put("Files", filesJson);
                 resp.getWriter().println(obj.toJSONString());//---Print and reply JSON as a text
