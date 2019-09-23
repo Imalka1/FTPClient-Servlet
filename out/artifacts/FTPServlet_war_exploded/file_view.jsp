@@ -66,7 +66,10 @@
         <button class="btn btn-warning" id="btnBack">Go Back</button>
     </div>
     <div class="col-1" style="margin-top: 5px">Path -></div>
-    <div class="col-9" style="margin-top: 5px" id="folderPath"></div>
+    <div class="col-7" style="margin-top: 5px" id="folderPath"></div>
+    <div class="col-2">
+        <button class="btn btn-warning" id="btnNewFolder" style="position: relative;float: right">Create Folder</button>
+    </div>
 </div>
 <div class="row" style="margin-top: 10px;margin-bottom: 100px">
     <div class="col-12">
@@ -200,13 +203,35 @@
                     }
                 },
                 error: function () {
-                    if(err.status === 500){
-                        renameFile()
-                    }
+                    // if(err.status === 500){
+                    //     renameFile()
+                    // }
                 }
             }
         );
     }
+
+    $('#btnNewFolder').click(function () {
+        $.ajax(
+            {
+                type: "post",
+                url: window.location.origin + "/ftp_new",
+                data: {
+                    folderPath: folderPath + '/New folder'
+                },
+                success: function (response) {
+                    if (JSON.parse(response) === true) {
+                        loadFiles(folderPath);
+                    }
+                },
+                error: function () {
+                    // if(err.status === 500){
+                    //     renameFile()
+                    // }
+                }
+            }
+        );
+    })
 </script>
 </body>
 </html>
