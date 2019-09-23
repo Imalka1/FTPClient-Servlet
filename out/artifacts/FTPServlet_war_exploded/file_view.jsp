@@ -143,13 +143,14 @@
                         tableData += '<tr>';
                         if (filesObj[i].FileType === 'Directory') {
                             tableData += '' +
-                                '<td class="directoryName" style="cursor: pointer"><i class="fa fa-folder" style="color: #E0A800;padding-right: 8px;padding-left: 5px;font-size: 25px"></i><span>' + filesObj[i].FileName + '</span></td>';
+                                '<td class="directoryName" style="cursor: pointer"><i class="fa fa-folder" style="color: #E0A800;padding-right: 8px;padding-left: 5px;font-size: 25px"></i><span>' + filesObj[i].FileName + '</span></td>'+
+                                '<td style="text-align: center;cursor: pointer"><span style="color: #94948c;text-align: center;font-size: 14px;font-weight: bold;padding: 5px">Not Available</span></td>';
                         } else if (filesObj[i].FileType === 'File') {
                             tableData += '' +
-                                '<td style="cursor: pointer"><i class="fa fa-file" style="color: #9e7500;padding-right: 8px;padding-left: 5px;font-size: 25px"></i><span>' + filesObj[i].FileName + '</span></td>';
+                                '<td style="cursor: pointer"><i class="fa fa-file" style="color: #9e7500;padding-right: 8px;padding-left: 5px;font-size: 25px"></i><span>' + filesObj[i].FileName + '</span></td>'+
+                                '<td style="text-align: center;cursor: pointer"><a href="ftp://imalka2:imalka2@127.0.0.1/' + filesObj[i].FileName + '"><i class="fa fa-arrow-circle-down" style="color: #94948c;text-align: center;font-size: 25px;padding: 5px"></i></a></td>';
                         }
                         tableData +=
-                            '<td style="text-align: center;cursor: pointer"><i class="fa fa-arrow-circle-down" style="color: #94948c;text-align: center;font-size: 25px;padding: 5px"></i></td>' +
                             '<td class="btnRename" style="text-align: center;cursor: pointer"><i class="fa fa-pencil" style="color: #62625c;text-align: center;font-size: 25px;padding: 5px"></i></td>' +
                             '<td class="btnDelete" style="text-align: center;cursor: pointer"><i class="fa fa-times" style="color: #dd1f08;text-align: center;font-size: 25px;padding: 5px"></i></td>' +
                             '</tr>';
@@ -157,10 +158,7 @@
                     $('#fileBody').html(tableData);
                 },
                 error: function (err) {
-                    // if(err.status === 500){
-                    //     console.log(err.status)
-                    //     loadFiles(folderPath);
-                    // }
+
                 }
             }
         );
@@ -203,9 +201,7 @@
                     }
                 },
                 error: function () {
-                    // if(err.status === 500){
-                    //     renameFile()
-                    // }
+
                 }
             }
         );
@@ -225,9 +221,7 @@
                     }
                 },
                 error: function () {
-                    // if(err.status === 500){
-                    //     renameFile()
-                    // }
+
                 }
             }
         );
@@ -249,9 +243,7 @@
                         }
                     },
                     error: function () {
-                        // if(err.status === 500){
-                        //     renameFile()
-                        // }
+
                     }
                 }
             );
