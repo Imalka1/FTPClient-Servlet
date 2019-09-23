@@ -60,7 +60,7 @@
 </div>
 <script>
     $('#fileType').change(function () {
-        loadFiles('');
+        loadFiles(folderPath);
     })
 
     $(window).on("load", function () {
@@ -77,14 +77,19 @@
     })
 
     var folders = Array();
+    var folderPath = '';
+    var folderPathView = '';
 
     function manageFolders(pushOrPop, folderName) {
-        var folderPath = '';
-        var folderPathView = '';
+        folderPath = '';
+        folderPathView = '';
         if (pushOrPop === 'push') {
             folders.push(folderName);
         } else if (pushOrPop === 'pop') {
             folders.pop();
+            if (folders.length === 0) {
+                folderPathView = '/';
+            }
         }
         for (var i = 0; i < folders.length; i++) {
             folderPath += '/' + folders[i];
