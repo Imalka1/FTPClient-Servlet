@@ -132,6 +132,7 @@
                     filePath: filePath
                 },
                 success: function (response) {
+                    console.log(response)
                     var tableData = '';
                     var filesObj = JSON.parse(response).Files;
                     // console.log(filesObj)
@@ -142,7 +143,7 @@
                                 '<td class="directoryName" style="cursor: pointer"><i class="fa fa-folder" style="color: #E0A800;padding-right: 8px;padding-left: 5px;font-size: 25px"></i><span>' + filesObj[i].FileName + '</span></td>';
                         } else if (filesObj[i].FileType === 'File') {
                             tableData += '' +
-                                '<td style="cursor: pointer"><i class="fa fa-file" style="color: #9e7500;padding-right: 8px;padding-left: 5px;font-size: 25px"></i>' + filesObj[i].FileName + '</td>';
+                                '<td style="cursor: pointer"><i class="fa fa-file" style="color: #9e7500;padding-right: 8px;padding-left: 5px;font-size: 25px"></i><span>' + filesObj[i].FileName + '</span></td>';
                         }
                         tableData +=
                             '<td style="text-align: center;cursor: pointer"><i class="fa fa-arrow-circle-down" style="color: #94948c;text-align: center;font-size: 25px;padding: 5px"></i></td>' +
@@ -152,30 +153,60 @@
                     }
                     $('#fileBody').html(tableData);
                 },
-                error: function () {
-
+                error: function (err) {
+                    // if(err.status === 500){
+                    //     console.log(err.status)
+                    //     loadFiles(folderPath);
+                    // }
                 }
             }
         );
     }
 
+    var oldName = '';
     $(document).on('click', '.btnRename', function () {
         if ($(this).parent().children('td').eq(2).children().attr('class') === 'fa fa-pencil') {
 
             $(this).parent().children('td').eq(0).removeClass();
             $(this).html('<i class="fa fa-check" style="color: #62625c;text-align: center;font-size: 25px;padding: 5px"></i>');
-            var folderName = $(this).parent().children('td').eq(0).children('span').text();
-            $(this).parent().children('td').eq(0).children('span').html('<input type="text" value="' + folderName + '">');
+            oldName = $(this).parent().children('td').eq(0).children('span').text();
+            $(this).parent().children('td').eq(0).children('span').html('<input type="text" value="' + oldName + '">');
 
         } else if ($(this).parent().children('td').eq(2).children().attr('class') === 'fa fa-check') {
 
-            $(this).parent().children('td').eq(0).addClass('directoryName');
-            $(this).html('<i class="fa fa-pencil" style="color: #62625c;text-align: center;font-size: 25px;padding: 5px"></i>');
-            var folderName = $(this).parent().children('td').eq(0).children('span').children('input').val();
-            $(this).parent().children('td').eq(0).children('span').html(folderName);
+            var newName = $(this).parent().children('td').eq(0).children('span').children('input').val();
+            console.log(folderPath + '/' + oldName)
+            console.log(folderPath + '/' + newName)
+            renameFile(folderPath + '/' + oldName, folderPath + '/' + newName, newName, this);
+
 
         }
     })
+
+    function renameFile(oldName, newName, newNameView, that) {
+        $.ajax(
+            {
+                type: "post",
+                url: window.location.origin + "/ftp_rename",
+                data: {
+                    oldName: oldName,
+                    newName: newName
+                },
+                success: function (response) {
+                    if (JSON.parse(response) === true) {
+                        $(that).parent().children('td').eq(0).addClass('directoryName');
+                        $(that).html('<i class="fa fa-pencil" style="color: #62625c;text-align: center;font-size: 25px;padding: 5px"></i>');
+                        $(that).parent().children('td').eq(0).children('span').html(newNameView);
+                    }
+                },
+                error: function () {
+                    if(err.status === 500){
+                        renameFile()
+                    }
+                }
+            }
+        );
+    }
 </script>
 </body>
 </html>
