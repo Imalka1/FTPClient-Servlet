@@ -52,7 +52,7 @@
 <div class="row" style="margin-top: 50px;margin-bottom: 100px">
     <div class="col-12">
         <div class="row" style="border: 1px #674c00 solid;margin: 30px;padding: 10px">
-            <div class="col-12" style="text-align: center;margin-bottom: 20px">File Upload</div>
+            <div class="col-12" style="text-align: center;margin-bottom: 20px;font-weight: bold">File Upload</div>
             <div class="col-3"></div>
             <div class="col-4">
                 <input type="file">
@@ -68,7 +68,7 @@
     <div class="col-12" style="margin-top: 80px">
         <div class="row">
             <div class="col-3"></div>
-            <div class="col-2">File Type</div>
+            <div class="col-2" style="font-weight: bold;margin-top: 5px">File Type</div>
             <div class="col-4">
                 <select name="" id="fileType" class="form-control">
                     <%
@@ -92,7 +92,7 @@
     <div class="col-2">
         <button class="btn btn-warning" id="btnBack">Go Back</button>
     </div>
-    <div class="col-1" style="margin-top: 5px">Path -></div>
+    <div class="col-1" style="margin-top: 5px;font-weight: bold">Path -></div>
     <div class="col-7" style="margin-top: 5px" id="folderPath"></div>
     <div class="col-2">
         <button class="btn btn-warning" id="btnNewFolder" style="position: relative;float: right">Create Folder</button>
@@ -171,11 +171,11 @@
                         if (filesObj[i].FileType === 'Directory') {
                             tableData += '' +
                                 '<td class="directoryName" style="cursor: pointer"><i class="fa fa-folder" style="color: #E0A800;padding-right: 8px;padding-left: 5px;font-size: 25px"></i><span>' + filesObj[i].FileName + '</span></td>' +
-                                '<td style="text-align: center;cursor: pointer"><span style="color: #94948c;text-align: center;font-size: 14px;font-weight: bold;padding: 5px">Not Available</span></td>';
+                                '<td style="text-align: center;cursor: pointer"><span style="color: #94948c;text-align: center;font-size: 15px;padding: 5px">Not Available</span></td>';
                         } else if (filesObj[i].FileType === 'File') {
                             tableData += '' +
                                 '<td style="cursor: pointer"><i class="fa fa-file" style="color: #9e7500;padding-right: 8px;padding-left: 5px;font-size: 25px"></i><span>' + filesObj[i].FileName + '</span></td>' +
-                                '<td style="text-align: center;cursor: pointer"><a href="ftp://' + $('#username').val() + ':' + $('#password').val() + '@' + $('#server').val() + '/' + filesObj[i].FileName + '"><i class="fa fa-arrow-circle-down" style="color: #94948c;text-align: center;font-size: 25px;padding: 5px"></i></a></td>';
+                                '<td style="text-align: center;cursor: pointer"><a href="ftp://' + $('#username').val() + ':' + $('#password').val() + '@' + $('#server').val() + '/' + filesObj[i].FileName + '" style="text-decoration: inherit;color:#94948c "><span style="margin-right: 3px">Download</span><i class="fa fa-arrow-circle-down" style="color: #94948c;text-align: center;font-size: 20px;padding: 5px"></i></a></td>';
                         }
                         tableData +=
                             '<td class="btnRename" style="text-align: center;cursor: pointer"><i class="fa fa-pencil" style="color: #62625c;text-align: center;font-size: 25px;padding: 5px"></i></td>' +
