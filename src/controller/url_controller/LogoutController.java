@@ -16,11 +16,24 @@ public class LogoutController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession sessionLogin = req.getSession(false);//---Load the current session
-        if (sessionLogin != null) {
-            FTPClient ftpClient = FtpClientConnection.getFtpClientConnection(sessionLogin);
-            ftpClient.logout();
-            sessionLogin.invalidate();//---Remove the current session
+        int connectionCount = 0;
+
+        while (connectionCount < 10) {
+            try {
+                connectionCount++;
+                FTPClient ftpClient = FtpClientConnection.getFtpClientConnection(sessionLogin,connectionCount);
+                if (ftpClient.isConnected()) {
+                    if (sessionLogin != null) {
+                        ftpClient.logout();
+                        ftpClient.disconnect();
+                        sessionLogin.invalidate();//---Remove the current session
+                        connectionCount = 10;
+                    }
+                    resp.sendRedirect("/index.jsp");//---Navigate (redirect) to login page
+                }
+            } catch (Exception e) {
+
+            }
         }
-        resp.sendRedirect("/index.jsp");//---Navigate (redirect) to login page
     }
 }

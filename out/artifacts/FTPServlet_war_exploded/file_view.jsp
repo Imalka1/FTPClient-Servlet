@@ -119,6 +119,7 @@
     $(window).on("load", function () {
         loadFiles('');
         $('#folderPath').text('/');
+        console.log(window.location)
     });
 
     $(document).on('click', '.directoryName', function () {
@@ -175,7 +176,7 @@
                         } else if (filesObj[i].FileType === 'File') {
                             tableData += '' +
                                 '<td style="cursor: pointer"><i class="fa fa-file" style="color: #9e7500;padding-right: 8px;padding-left: 5px;font-size: 25px"></i><span>' + filesObj[i].FileName + '</span></td>' +
-                                '<td style="text-align: center;cursor: pointer"><a href="ftp://' + $('#username').val() + ':' + $('#password').val() + '@' + $('#server').val() + '/' + filesObj[i].FileName + '" style="text-decoration: inherit;color:#94948c "><span style="margin-right: 3px">Download</span><i class="fa fa-arrow-circle-down" style="color: #94948c;text-align: center;font-size: 20px;padding: 5px"></i></a></td>';
+                                '<td style="text-align: center;cursor: pointer"><a href="ftp://' + $('#username').val() + ':' + $('#password').val() + '@' + window.location.hostname + '/' + filesObj[i].FileName + '" style="text-decoration: inherit;color:#94948c "><span style="margin-right: 3px">Download</span><i class="fa fa-arrow-circle-down" style="color: #94948c;text-align: center;font-size: 20px;padding: 5px"></i></a></td>';
                         }
                         tableData +=
                             '<td class="btnRename" style="text-align: center;cursor: pointer"><i class="fa fa-pencil" style="color: #62625c;text-align: center;font-size: 25px;padding: 5px"></i></td>' +

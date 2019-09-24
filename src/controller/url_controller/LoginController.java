@@ -21,7 +21,7 @@ public class LoginController extends HttpServlet {
         String password = req.getParameter("password").trim();
         try {
             if (!username.equals("") && !password.equals("")) {
-                FtpClientConnection.getFtpClientConnection(username, password, sessionLogin);
+                FtpClientConnection.getFtpClientConnection(username, password, sessionLogin, 0);
                 resp.sendRedirect("/file_view.jsp");
             } else {
                 resp.sendRedirect("/index.jsp?error=error");

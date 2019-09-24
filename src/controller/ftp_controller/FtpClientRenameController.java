@@ -21,7 +21,7 @@ public class FtpClientRenameController extends HttpServlet {
         while (connectionCount < 10) {
             try {
                 connectionCount++;
-                FTPClient client = FtpClientConnection.getFtpClientConnection(sessionLogin);
+                FTPClient client = FtpClientConnection.getFtpClientConnection(sessionLogin,connectionCount);
                 if (client.isConnected()) {
                     if (client.rename(req.getParameter("oldName"), req.getParameter("newName"))) {
                         resp.getWriter().println(true);

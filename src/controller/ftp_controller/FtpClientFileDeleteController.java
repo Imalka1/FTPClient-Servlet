@@ -21,7 +21,7 @@ public class FtpClientFileDeleteController extends HttpServlet {
         while (connectionCount < 10) {
             try {
                 connectionCount++;
-                FTPClient client = FtpClientConnection.getFtpClientConnection(sessionLogin);
+                FTPClient client = FtpClientConnection.getFtpClientConnection(sessionLogin,connectionCount);
                 if (client.isConnected()) {
                     if (req.getParameter("fileOrFolder").equals("fa fa-file")) {
                         if (client.deleteFile(req.getParameter("folderPath"))) {

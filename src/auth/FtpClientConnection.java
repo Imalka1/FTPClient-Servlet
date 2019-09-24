@@ -41,15 +41,15 @@ public class FtpClientConnection {
 //        }
     }
 
-    public static FTPClient getFtpClientConnection(String username, String password, HttpSession sessionLogin) throws IOException {
-        return createFtpClient(username, password, sessionLogin);
+    public static FTPClient getFtpClientConnection(String username, String password, HttpSession sessionLogin, int connectionCount) throws IOException {
+        return createFtpClient(username, password, sessionLogin, connectionCount);
     }
 
-    public static FTPClient getFtpClientConnection(HttpSession sessionLogin) throws IOException {
-        return createFtpClient(sessionLogin.getAttribute("username").toString(), sessionLogin.getAttribute("password").toString(), sessionLogin);
+    public static FTPClient getFtpClientConnection(HttpSession sessionLogin, int connectionCount) throws IOException {
+        return createFtpClient(sessionLogin.getAttribute("username").toString(), sessionLogin.getAttribute("password").toString(), sessionLogin, connectionCount);
     }
 
-    private static FTPClient createFtpClient(String username, String password, HttpSession sessionLogin) throws IOException {
+    private static FTPClient createFtpClient(String username, String password, HttpSession sessionLogin, int connectionCount) throws IOException {
         if (sessionLogin.getAttribute("ftpClientobj") == null) {
             ftpClientConnection = new FtpClientConnection(username, password);
             sessionLogin.setAttribute("ftpClientobj", ftpClientConnection.getFtpClient());
@@ -59,6 +59,9 @@ public class FtpClientConnection {
         } else {
             try {
                 ftpClientConnection.getFtpClient().sendNoOp();
+                if (connectionCount == 9) {
+                    sessionLogin.setAttribute("ftpClientobj", null);
+                }
             } catch (IOException e) {
                 ftpClientConnection = new FtpClientConnection(username, password);
                 sessionLogin.setAttribute("ftpClientobj", ftpClientConnection.getFtpClient());

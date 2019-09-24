@@ -29,7 +29,7 @@ public class FtpClientController extends HttpServlet {
         while (connectionCount < 10) {
             try {
                 connectionCount++;
-                FTPClient client = FtpClientConnection.getFtpClientConnection(sessionLogin);
+                FTPClient client = FtpClientConnection.getFtpClientConnection(sessionLogin,connectionCount);
                 if (client.isConnected()) {
                     // Obtain a list of filenames in the current working
                     // directory. When no file found an empty array will

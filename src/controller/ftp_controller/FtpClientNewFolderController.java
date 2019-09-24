@@ -21,7 +21,7 @@ public class FtpClientNewFolderController extends HttpServlet {
         while (connectionCount < 10) {
             try {
                 connectionCount++;
-                FTPClient client = FtpClientConnection.getFtpClientConnection(sessionLogin);
+                FTPClient client = FtpClientConnection.getFtpClientConnection(sessionLogin,connectionCount);
                 if (client.isConnected()) {
                     if (client.makeDirectory(req.getParameter("folderPath"))) {
                         resp.getWriter().println(true);
