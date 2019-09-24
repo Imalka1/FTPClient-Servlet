@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--<%--%>
-    <%--new FtpClientController().ftpClient();--%>
+<%--new FtpClientController().ftpClient();--%>
 <%--%>--%>
 <html>
 <head>
@@ -20,13 +20,13 @@
         Login
     </div>
 </div>
-<form action="">
+<form action="/ftp_login" method="post">
     <div class="row" style="margin-left: 190px">
         <div class="col-3" style="margin-top: 35px;text-align: right">
             Username
         </div>
         <div class="col-4" style="margin-top: 30px">
-            <input class="form-control" type="text">
+            <input class="form-control" type="text" name="username">
         </div>
     </div>
     <div class="row" style="margin-left: 190px">
@@ -34,7 +34,7 @@
             Password
         </div>
         <div class="col-4" style="margin-top: 20px">
-            <input class="form-control" type="text">
+            <input class="form-control" type="password" name="password">
         </div>
     </div>
     <div class="row">

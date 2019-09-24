@@ -3,9 +3,8 @@ package auth;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import javax.servlet.http.HttpSession;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,48 +14,57 @@ import java.util.Properties;
 public class FtpClientConnection {
     private static FtpClientConnection ftpClientConnection;
     private FTPClient ftpClient;
-    private String[] usernameAndPassword = new String[2];
 
-    private FtpClientConnection() {
-        try {
-            Connection connection = DBConnection.getDBConnection().getConnection();//---Get database connection
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from users");//---Prepare sql as a java object
-            ResultSet rst = preparedStatement.executeQuery();//---Execute sql and store result
-            if (rst.next()) {//---Navigate pointer to results
-                ftpClient = new FTPClient();
-                ftpClient.connect("127.0.0.1", 21);
+    private FtpClientConnection(String username, String password) throws IOException {
+//        try {
+        InputStream input = new FileInputStream("C:\\FtpClientProperties\\server.properties");
+        Properties prop = new Properties();
 
-                int reply = ftpClient.getReplyCode();
-                if (!FTPReply.isPositiveCompletion(reply)) {
-                    ftpClient.disconnect();
-                    throw new IOException("Exception in connecting to FTP Server");
-                }
-                ftpClient.login(rst.getString(1), rst.getString(2));
-                usernameAndPassword[0] = rst.getString(1);
-                usernameAndPassword[1] = rst.getString(2);
+        prop.load(input);
+
+        ftpClient = new FTPClient();
+        ftpClient.connect(prop.getProperty("server"), 21);
+
+//        int reply = ftpClient.getReplyCode();
+
+//        !FTPReply.isPositiveCompletion(reply)
+        if (!ftpClient.login(username, password)) {
+            ftpClient.disconnect();
+            throw new IOException("Exception in connecting to FTP Server");
+        }
+
+        ftpClient.enterLocalPassiveMode();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+    }
+
+    public static FTPClient getFtpClientConnection(String username, String password, HttpSession sessionLogin) throws IOException {
+        return createFtpClient(username, password, sessionLogin);
+    }
+
+    public static FTPClient getFtpClientConnection(HttpSession sessionLogin) throws IOException {
+        return createFtpClient(sessionLogin.getAttribute("username").toString(), sessionLogin.getAttribute("password").toString(), sessionLogin);
+    }
+
+    private static FTPClient createFtpClient(String username, String password, HttpSession sessionLogin) throws IOException {
+        if (sessionLogin.getAttribute("ftpClientobj") == null) {
+            ftpClientConnection = new FtpClientConnection(username, password);
+            sessionLogin.setAttribute("ftpClientobj", ftpClientConnection.getFtpClient());
+            sessionLogin.setAttribute("username", username);
+            sessionLogin.setAttribute("password", password);
+        } else {
+            try {
+                ftpClientConnection.getFtpClient().sendNoOp();
+            } catch (IOException e) {
+                ftpClientConnection = new FtpClientConnection(username, password);
+                sessionLogin.setAttribute("ftpClientobj", ftpClientConnection.getFtpClient());
             }
-
-            ftpClient.enterLocalPassiveMode();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+        return (FTPClient) sessionLogin.getAttribute("ftpClientobj");
     }
 
-    public static FtpClientConnection getFtpClientConnection() {
-        if (ftpClientConnection == null) {
-            ftpClientConnection = new FtpClientConnection();
-        }
-        return ftpClientConnection;
-    }
-
-    public FTPClient getFtpClient() {
-        try {
-            ftpClient.sendNoOp();
-        } catch (IOException e) {
-            ftpClientConnection = new FtpClientConnection();
-        }
+    private FTPClient getFtpClient() {
         return ftpClient;
     }
 }

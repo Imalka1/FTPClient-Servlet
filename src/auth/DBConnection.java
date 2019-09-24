@@ -11,7 +11,7 @@ public class DBConnection {
     private DBConnection() {
         try {
             Class.forName("org.sqlite.JDBC");//--Load JDBC driver from library(mysql connector)
-            connection = DriverManager.getConnection("jdbc:sqlite:C:\\sqlite\\ftp.db");//--Establish the database connection via db url, db username and db password
+            connection = DriverManager.getConnection("jdbc:sqlite:C:\\FtpClientProperties\\ftp.db");//--Establish the database connection via db url, db username and db password
         } catch (SQLException e) {//--Catch if any sql exception occurred
             e.printStackTrace();
         } catch (ClassNotFoundException e) {//--Catch if driver is not loaded or cannot be found

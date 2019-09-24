@@ -14,12 +14,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/ftp_client")
 public class FtpClientController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession sessionLogin = req.getSession(false);
         JSONObject obj = new JSONObject();//---Creates a JSON object {}
         JSONArray filesJson = new JSONArray();//---Creates a JSON array to store JSON objects []
         int connectionCount = 0;
@@ -27,7 +29,7 @@ public class FtpClientController extends HttpServlet {
         while (connectionCount < 10) {
             try {
                 connectionCount++;
-                FTPClient client = FtpClientConnection.getFtpClientConnection().getFtpClient();
+                FTPClient client = FtpClientConnection.getFtpClientConnection(sessionLogin);
                 if (client.isConnected()) {
                     // Obtain a list of filenames in the current working
                     // directory. When no file found an empty array will
