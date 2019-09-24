@@ -6,9 +6,19 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--<%--%>
-<%--new FtpClientController().ftpClient();--%>
-<%--%>--%>
+<%
+    //--------------------------------------------Load the current session----------------------------------------------
+    HttpSession sessionLogin = request.getSession(false);
+
+    //------------------------------------Check whether the session variable is alive-------------------------------
+    if (sessionLogin.getAttribute("ftpClientobj") != null) {
+%>
+
+<%------------------------------------------Navigate to admin landing page--------------------------------------------%>
+<jsp:forward page="file_view.jsp"/>
+<%
+    }
+%>
 <html>
 <head>
     <title>$Title$</title>

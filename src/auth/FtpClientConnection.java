@@ -14,6 +14,7 @@ import java.util.Properties;
 public class FtpClientConnection {
     private static FtpClientConnection ftpClientConnection;
     private FTPClient ftpClient;
+    private String server;
 
     private FtpClientConnection(String username, String password) throws IOException {
 //        try {
@@ -24,6 +25,7 @@ public class FtpClientConnection {
 
         ftpClient = new FTPClient();
         ftpClient.connect(prop.getProperty("server"), 21);
+        server = prop.getProperty("server");
 
 //        int reply = ftpClient.getReplyCode();
 
@@ -53,6 +55,7 @@ public class FtpClientConnection {
             sessionLogin.setAttribute("ftpClientobj", ftpClientConnection.getFtpClient());
             sessionLogin.setAttribute("username", username);
             sessionLogin.setAttribute("password", password);
+            sessionLogin.setAttribute("server", ftpClientConnection.getServer());
         } else {
             try {
                 ftpClientConnection.getFtpClient().sendNoOp();
@@ -66,5 +69,9 @@ public class FtpClientConnection {
 
     private FTPClient getFtpClient() {
         return ftpClient;
+    }
+
+    private String getServer() {
+        return server;
     }
 }

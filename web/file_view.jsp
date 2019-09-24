@@ -6,6 +6,19 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    //--------------------------------------------Load the current session----------------------------------------------
+    HttpSession sessionLogin = request.getSession(false);
+
+    //------------------------------------Check whether the session variable is alive-------------------------------
+    if (sessionLogin.getAttribute("ftpClientobj") == null) {
+%>
+
+<%------------------------------------------Navigate to admin landing page--------------------------------------------%>
+<jsp:forward page="index.jsp"/>
+<%
+    }
+%>
 <html>
 <head>
     <title>Title</title>
@@ -20,13 +33,17 @@
     </style>
 </head>
 <body class="container-fluid">
+<input type="hidden" value="<%= sessionLogin.getAttribute("username")%>" id="username">
+<input type="hidden" value="<%= sessionLogin.getAttribute("password")%>" id="password">
+<input type="hidden" value="<%= sessionLogin.getAttribute("server")%>" id="server">
 <div class="row" style="margin-top: 50px">
     <div class="col-10" style="text-align: center">
         FTP Client
     </div>
     <div class="col-2">
         <form action="/ftp_logout" method="post">
-            <button type="submit" class="btn btn-warning" style="position: absolute;left: 50%;transform: translateX(-50%)">Logout
+            <button type="submit" class="btn btn-warning"
+                    style="position: absolute;left: 50%;transform: translateX(-50%)">Logout
             </button>
         </form>
     </div>
@@ -151,7 +168,7 @@
                         } else if (filesObj[i].FileType === 'File') {
                             tableData += '' +
                                 '<td style="cursor: pointer"><i class="fa fa-file" style="color: #9e7500;padding-right: 8px;padding-left: 5px;font-size: 25px"></i><span>' + filesObj[i].FileName + '</span></td>' +
-                                '<td style="text-align: center;cursor: pointer"><a href="ftp://imalka2:imalka2@127.0.0.1/' + filesObj[i].FileName + '"><i class="fa fa-arrow-circle-down" style="color: #94948c;text-align: center;font-size: 25px;padding: 5px"></i></a></td>';
+                                '<td style="text-align: center;cursor: pointer"><a href="ftp://' + $('#username').val() + ':' + $('#password').val() + '@' + $('#server').val() + '/' + filesObj[i].FileName + '"><i class="fa fa-arrow-circle-down" style="color: #94948c;text-align: center;font-size: 25px;padding: 5px"></i></a></td>';
                         }
                         tableData +=
                             '<td class="btnRename" style="text-align: center;cursor: pointer"><i class="fa fa-pencil" style="color: #62625c;text-align: center;font-size: 25px;padding: 5px"></i></td>' +
