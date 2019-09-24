@@ -1,4 +1,5 @@
-<%--
+<%@ page import="controller.db_controller.FileTypesController" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: Imalka Gunawardana
   Date: 2019-09-22
@@ -70,11 +71,17 @@
             <div class="col-2">File Type</div>
             <div class="col-4">
                 <select name="" id="fileType" class="form-control">
-                    <option value=".jpg">JPG(.jpg)</option>
-                    <option value=".mp3">mp3(.mp3)</option>
-                    <option value=".rar">ZIP(.zip)</option>
-                    <option value=".docx">Word(.docx)</option>
-                    <option value=".pdf">PDF(.pdf)</option>
+                    <%
+                        {
+                            List<String[]> fileTypes = new FileTypesController().getFileTypes();
+                            for (String[] fileType : fileTypes) {
+                    %>
+                    <option value="<%= fileType[0]%>"><%= fileType[1]%>
+                    </option>
+                    <%
+                            }
+                        }
+                    %>
                 </select>
             </div>
             <div class="col-3"></div>
@@ -255,7 +262,8 @@
                     type: "post",
                     url: window.location.origin + "/ftp_delete",
                     data: {
-                        folderPath: folderPath + '/' + $(this).parent().children('td').eq(0).children('span').text()
+                        folderPath: folderPath + '/' + $(this).parent().children('td').eq(0).children('span').text(),
+                        fileOrFolder: $(this).parent().children('td').eq(0).children('i').attr('class')
                     },
                     success: function (response) {
                         if (JSON.parse(response) === true) {
