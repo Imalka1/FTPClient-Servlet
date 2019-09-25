@@ -18,7 +18,7 @@ public class FtpClientConnection {
 
     private FtpClientConnection(String username, String password) throws IOException {
 //        try {
-        InputStream input = new FileInputStream("C:\\FtpClientProperties\\server.properties");
+        InputStream input = new FileInputStream(this.getClass().getClassLoader().getResource("ftp_client_properties/server.properties").getPath());
         Properties prop = new Properties();
 
         prop.load(input);
