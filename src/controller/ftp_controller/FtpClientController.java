@@ -26,7 +26,7 @@ public class FtpClientController extends HttpServlet {
         JSONArray filesJson = new JSONArray();//---Creates a JSON array to store JSON objects []
         int connectionCount = 0;
 
-        while (connectionCount < 10) {
+        while (connectionCount < 20) {
             try {
                 connectionCount++;
                 FTPClient client = FtpClientConnection.getFtpClientConnection(sessionLogin,connectionCount);
@@ -61,7 +61,7 @@ public class FtpClientController extends HttpServlet {
                     }
                     obj.put("Files", filesJson);
                     resp.getWriter().println(obj.toJSONString());//---Print and reply JSON as a text
-                    connectionCount = 10;
+                    connectionCount = 20;
                 }
 //            client.logout();
             } catch (Exception e) {

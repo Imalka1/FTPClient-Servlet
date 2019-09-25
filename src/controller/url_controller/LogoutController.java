@@ -18,7 +18,7 @@ public class LogoutController extends HttpServlet {
         HttpSession sessionLogin = req.getSession(false);//---Load the current session
         int connectionCount = 0;
 
-        while (connectionCount < 10) {
+        while (connectionCount < 20) {
             try {
                 connectionCount++;
                 FTPClient ftpClient = FtpClientConnection.getFtpClientConnection(sessionLogin,connectionCount);
@@ -27,7 +27,7 @@ public class LogoutController extends HttpServlet {
                         ftpClient.logout();
                         ftpClient.disconnect();
                         sessionLogin.invalidate();//---Remove the current session
-                        connectionCount = 10;
+                        connectionCount = 20;
                     }
                     resp.sendRedirect("/index.jsp");//---Navigate (redirect) to login page
                 }

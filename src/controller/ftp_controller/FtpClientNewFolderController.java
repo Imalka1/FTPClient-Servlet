@@ -18,14 +18,14 @@ public class FtpClientNewFolderController extends HttpServlet {
         HttpSession sessionLogin = req.getSession(false);
         int connectionCount = 0;
 
-        while (connectionCount < 10) {
+        while (connectionCount < 20) {
             try {
                 connectionCount++;
                 FTPClient client = FtpClientConnection.getFtpClientConnection(sessionLogin,connectionCount);
                 if (client.isConnected()) {
                     if (client.makeDirectory(req.getParameter("folderPath"))) {
                         resp.getWriter().println(true);
-                        connectionCount = 10;
+                        connectionCount = 20;
                     }
                 }
             } catch (Exception e) {

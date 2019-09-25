@@ -59,7 +59,7 @@ public class FtpClientConnection {
         } else {
             try {
                 ftpClientConnection.getFtpClient().sendNoOp();
-                if (connectionCount == 9) {
+                if (connectionCount == 10) {
                     sessionLogin.setAttribute("ftpClientobj", null);
                 }
             } catch (IOException e) {
