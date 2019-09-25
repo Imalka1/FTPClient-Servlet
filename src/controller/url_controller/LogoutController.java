@@ -29,7 +29,7 @@ public class LogoutController extends HttpServlet {
                         sessionLogin.invalidate();//---Remove the current session
                         connectionCount = 20;
                     }
-                    resp.sendRedirect("/index.jsp");//---Navigate (redirect) to login page
+                    resp.sendRedirect("index.jsp");//---Navigate (redirect) to login page
                 }
             } catch (Exception e) {
 

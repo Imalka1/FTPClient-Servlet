@@ -37,12 +37,13 @@
 <input type="hidden" value="<%= sessionLogin.getAttribute("username")%>" id="username">
 <input type="hidden" value="<%= sessionLogin.getAttribute("password")%>" id="password">
 <input type="hidden" value="<%= sessionLogin.getAttribute("server")%>" id="server">
+<input type="hidden" value="<%= sessionLogin.getAttribute("path_name")%>" id="path_name">
 <div class="row" style="margin-top: 50px">
     <div class="col-10" style="text-align: center">
         FTP Client
     </div>
     <div class="col-2">
-        <form action="/ftp_logout" method="post">
+        <form action="ftp_logout" method="post">
             <button type="submit" class="btn btn-warning"
                     style="position: absolute;left: 50%;transform: translateX(-50%)">Logout
             </button>
@@ -157,7 +158,7 @@
         $.ajax(
             {
                 type: "post",
-                url: window.location.origin + "/ftp_client",
+                url: window.location.origin + $('#path_name').val() + "/ftp_client",
                 data: {
                     fileType: $('#fileType').val(),
                     filePath: filePath
@@ -216,7 +217,7 @@
         $.ajax(
             {
                 type: "post",
-                url: window.location.origin + "/ftp_rename",
+                url: window.location.origin + $('#path_name').val() + "/ftp_rename",
                 data: {
                     oldName: oldName,
                     newName: newName
@@ -239,7 +240,7 @@
         $.ajax(
             {
                 type: "post",
-                url: window.location.origin + "/ftp_new",
+                url: window.location.origin + $('#path_name').val() + "/ftp_new",
                 data: {
                     folderPath: folderPath + '/New folder'
                 },
@@ -261,7 +262,7 @@
             $.ajax(
                 {
                     type: "post",
-                    url: window.location.origin + "/ftp_delete",
+                    url: window.location.origin + $('#path_name').val() + "/ftp_delete",
                     data: {
                         folderPath: folderPath + '/' + $(this).parent().children('td').eq(0).children('span').text(),
                         fileOrFolder: $(this).parent().children('td').eq(0).children('i').attr('class')

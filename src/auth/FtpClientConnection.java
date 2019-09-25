@@ -15,6 +15,7 @@ public class FtpClientConnection {
     private static FtpClientConnection ftpClientConnection;
     private FTPClient ftpClient;
     private String server;
+    private String pathName;
 
     private FtpClientConnection(String username, String password) throws IOException {
 //        try {
@@ -26,6 +27,7 @@ public class FtpClientConnection {
         ftpClient = new FTPClient();
         ftpClient.connect(prop.getProperty("server"), 21);
         server = prop.getProperty("server");
+        pathName = prop.getProperty("path_name");
 
 //        int reply = ftpClient.getReplyCode();
 
@@ -56,6 +58,7 @@ public class FtpClientConnection {
             sessionLogin.setAttribute("username", username);
             sessionLogin.setAttribute("password", password);
             sessionLogin.setAttribute("server", ftpClientConnection.getServer());
+            sessionLogin.setAttribute("path_name", ftpClientConnection.getPathName());
         } else {
             try {
                 ftpClientConnection.getFtpClient().sendNoOp();
@@ -76,5 +79,9 @@ public class FtpClientConnection {
 
     private String getServer() {
         return server;
+    }
+
+    private String getPathName() {
+        return pathName;
     }
 }

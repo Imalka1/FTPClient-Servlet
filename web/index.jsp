@@ -30,7 +30,7 @@
         Login
     </div>
 </div>
-<form action="/ftp_login" method="post">
+<form action="ftp_login" method="post">
     <div class="row" style="margin-left: 190px">
         <div class="col-3" style="margin-top: 35px;text-align: right">
             Username

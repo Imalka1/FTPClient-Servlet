@@ -22,13 +22,13 @@ public class LoginController extends HttpServlet {
         try {
             if (!username.equals("") && !password.equals("")) {
                 FtpClientConnection.getFtpClientConnection(username, password, sessionLogin, 0);
-                resp.sendRedirect("/file_view.jsp");
+                resp.sendRedirect("file_view.jsp");
             } else {
-                resp.sendRedirect("/index.jsp?error=error");
+                resp.sendRedirect("index.jsp?error=error");
             }
         } catch (IOException e) {
             sessionLogin.invalidate();
-            resp.sendRedirect("/index.jsp?error=error");
+            resp.sendRedirect("index.jsp?error=error");
             e.printStackTrace();
         }
     }
