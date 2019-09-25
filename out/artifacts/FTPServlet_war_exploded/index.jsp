@@ -22,7 +22,7 @@
 <html>
 <head>
     <title>$Title$</title>
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 </head>
 <body class="container-fluid">
 <div class="row">

@@ -1,11 +1,8 @@
 package controller.ftp_controller;
 
 import auth.FtpClientConnection;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.ftp.FTPReply;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -63,7 +60,6 @@ public class FtpClientController extends HttpServlet {
                     resp.getWriter().println(obj.toJSONString());//---Print and reply JSON as a text
                     connectionCount = 20;
                 }
-//            client.logout();
             } catch (Exception e) {
 
             }
