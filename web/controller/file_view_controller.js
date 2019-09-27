@@ -19,10 +19,12 @@ $('#btnBack').click(function () {
 
 var folders = Array();
 var folderPath = '';
+var folderPathDownloadUrl = '/';
 var folderPathView = '';
 
 function manageFolders(pushOrPop, folderName) {
     folderPath = '';
+    folderPathDownloadUrl = '/';
     folderPathView = '';
     if (pushOrPop === 'push') {
         folders.push(folderName);
@@ -35,6 +37,7 @@ function manageFolders(pushOrPop, folderName) {
     for (var i = 0; i < folders.length; i++) {
         folderPath += '/' + folders[i];
         folderPathView += ' / ' + folders[i];
+        folderPathDownloadUrl += folders[i] + '/';
     }
     $('#folderPath').text(folderPathView);
     loadFiles(folderPath);
@@ -63,7 +66,8 @@ function loadFiles(filePath) {
                     } else if (filesObj[i].FileType === 'File') {
                         tableData += '' +
                             '<td style="cursor: pointer"><i class="fa fa-file" style="color: #9e7500;padding-right: 8px;padding-left: 5px;font-size: 25px"></i><span>' + filesObj[i].FileName + '</span></td>' +
-                            '<td style="text-align: center;cursor: pointer"><a href="ftp://' + $('#username').val() + ':' + $('#password').val() + '@' + window.location.hostname + folderPath + '/' + filesObj[i].FileName + '" style="text-decoration: inherit;color:#94948c "><span style="margin-right: 3px">Download</span><i class="fa fa-arrow-circle-down" style="color: #94948c;text-align: center;font-size: 20px;padding: 5px"></i></a></td>';
+                            // '<td style="text-align: center;cursor: pointer"><a href="ftp://' + $('#username').val() + ':' + $('#password').val() + '@' + window.location.hostname + folderPath + '/' + filesObj[i].FileName + '" style="text-decoration: inherit;color:#94948c "><span style="margin-right: 3px">Download</span><i class="fa fa-arrow-circle-down" style="color: #94948c;text-align: center;font-size: 20px;padding: 5px"></i></a></td>';
+                            '<td style="text-align: center;cursor: pointer" class="btnDownloadFile"><span style="margin-right: 3px">Download</span><i class="fa fa-arrow-circle-down" style="color: #94948c;text-align: center;font-size: 20px;padding: 5px"></i></td>';
                     }
                     tableData +=
                         '<td class="btnRename" style="text-align: center;cursor: pointer"><i class="fa fa-pencil" style="color: #62625c;text-align: center;font-size: 25px;padding: 5px"></i></td>' +
@@ -93,8 +97,8 @@ $(document).on('click', '.btnRename', function () {
     } else if ($(this).parent().children('td').eq(2).children().attr('class') === 'fa fa-check') {
 
         var newName = $(this).parent().children('td').eq(0).children('span').children('input').val();
-        console.log(folderPath + '/' + oldName)
-        console.log(folderPath + '/' + newName)
+        // console.log(folderPath + '/' + oldName)
+        // console.log(folderPath + '/' + newName)
         renameFile(folderPath + '/' + oldName, folderPath + '/' + newName, newName, this);
 
 
@@ -213,4 +217,10 @@ $('#btnUploadFile').click(function () {
     } else {
         loadFiles(folderPath);
     }
+});
+
+//--Download File--
+
+$(document).on('click', '.btnDownloadFile', function () {
+    document.location.href = window.location.origin + $('#path_name').val() + '/ftp_download?folder_path=' + folderPathDownloadUrl + '&file_name=' + $(this).parent().children('td').eq(0).children('span').text();
 });
