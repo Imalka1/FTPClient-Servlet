@@ -47,7 +47,7 @@ function loadFiles(filePath) {
     $.ajax(
         {
             type: "post",
-            url: window.location.origin + $('#path_name').val() + "/ftp_client",
+            url: window.location.origin + $('#contextPath').val() + "/ftp_client",
             data: {
                 fileType: $('#fileType').val(),
                 filePath: filePath
@@ -109,7 +109,7 @@ function renameFile(oldName, newName, newNameView, that) {
     $.ajax(
         {
             type: "post",
-            url: window.location.origin + $('#path_name').val() + "/ftp_rename",
+            url: window.location.origin + $('#contextPath').val() + "/ftp_rename",
             data: {
                 oldName: oldName,
                 newName: newName
@@ -134,7 +134,7 @@ $('#btnNewFolder').click(function () {
     $.ajax(
         {
             type: "post",
-            url: window.location.origin + $('#path_name').val() + "/ftp_new",
+            url: window.location.origin + $('#contextPath').val() + "/ftp_new",
             data: {
                 folderPath: folderPath + '/New folder'
             },
@@ -158,7 +158,7 @@ $(document).on('click', '.btnDelete', function () {
         $.ajax(
             {
                 type: "post",
-                url: window.location.origin + $('#path_name').val() + "/ftp_delete",
+                url: window.location.origin + $('#contextPath').val() + "/ftp_delete",
                 data: {
                     folderPath: folderPath + '/' + $(this).parent().children('td').eq(0).children('span').text(),
                     fileOrFolder: $(this).parent().children('td').eq(0).children('i').attr('class')
@@ -195,7 +195,7 @@ $('#btnUploadFile').click(function () {
             {
                 async: false,
                 type: "post",
-                url: window.location.origin + $('#path_name').val() + "/ftp_upload",
+                url: window.location.origin + $('#contextPath').val() + "/ftp_upload",
                 processData: false, // important
                 contentType: false, // important
                 data: myFormData,
@@ -222,5 +222,5 @@ $('#btnUploadFile').click(function () {
 //--Download File--
 
 $(document).on('click', '.btnDownloadFile', function () {
-    document.location.href = window.location.origin + $('#path_name').val() + '/ftp_download?folder_path=' + folderPathDownloadUrl + '&file_name=' + $(this).parent().children('td').eq(0).children('span').text();
+    document.location.href = window.location.origin + $('#contextPath').val() + '/ftp_download?folder_path=' + folderPathDownloadUrl + '&file_name=' + $(this).parent().children('td').eq(0).children('span').text();
 });

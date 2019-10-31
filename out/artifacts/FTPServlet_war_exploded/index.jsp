@@ -22,7 +22,7 @@
 <html>
 <head>
     <title>$Title$</title>
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css">
 </head>
 <body class="container-fluid">
 <div class="row">
@@ -30,7 +30,7 @@
         Login
     </div>
 </div>
-<form action="ftp_login" method="post">
+<form action="${pageContext.request.contextPath}/ftp_login" method="post">
     <div class="row" style="margin-left: 190px">
         <div class="col-3" style="margin-top: 35px;text-align: right">
             Username

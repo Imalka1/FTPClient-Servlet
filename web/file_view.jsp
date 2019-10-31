@@ -34,16 +34,16 @@
     </style>
 </head>
 <body class="container-fluid">
+<input type="hidden" id="contextPath" value="<%= request.getContextPath()%>">
 <input type="hidden" value="<%= sessionLogin.getAttribute("username")%>" id="username">
 <input type="hidden" value="<%= sessionLogin.getAttribute("password")%>" id="password">
 <input type="hidden" value="<%= sessionLogin.getAttribute("server")%>" id="server">
-<input type="hidden" value="<%= sessionLogin.getAttribute("path_name")%>" id="path_name">
 <div class="row" style="margin-top: 50px">
     <div class="col-10" style="text-align: center;font-size: 23px;font-weight: bold">
         FTP Client
     </div>
     <div class="col-2">
-        <form action="ftp_logout" method="post">
+        <form action="${pageContext.request.contextPath}/ftp_logout" method="post">
             <button type="submit" class="btn btn-warning"
                     style="position: absolute;left: 50%;transform: translateX(-50%)">Logout
             </button>
